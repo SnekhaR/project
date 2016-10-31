@@ -3,7 +3,8 @@ var express           = require('express'),
     app               = express(),
     bodyParser        = require('body-parser'),
     mongoose          = require('mongoose'), 
-    servercontroller  = require('./server/controllers/serverctrl');
+    Users = require('./server/models/user.js');
+    //servercontroller  = require('./server/controllers/serverctrl');
 
 mongoose.connect('mongodb://localhost:27017/pillayar');
 
@@ -20,9 +21,9 @@ app.get('/', function (req, res) {
 });
 app.use('/js', express.static(__dirname + '/client/js'));
 
-app.post('/api/user',servercontroller.create);
-app.post('/api/email',function(req,res)
-	{
+//app.post('/api/user',servercontroller.create);
+app.post('/api/user',function(req,res)
+	{   var user = new Users(req.body);
 		var rand,mailOptions,host,link;
 		console.log(req.body.email);
 		rand=Math.floor((Math.random() * 100) + 54);
@@ -61,6 +62,15 @@ if((req.protocol+"://"+req.get('host'))==("http://"+host))
     {
         console.log("email is verified");
         res.end("<h1>Email "+mailOptions.to+" is been Successfully verified");
+        user.save(function(results,err)
+        {
+            
+            
+            
+                res.json(results);
+            
+        });
+        
     }
     else
     {
