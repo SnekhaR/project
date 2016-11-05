@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
 const signupSchema = require('../model/signup-model');
+const SignupVerify = require('../verify/signup-verify');
 const _ = require('lodash');
 
 signupSchema.statics.getAll = () => {
@@ -19,12 +20,15 @@ signupSchema.statics.getAll = () => {
 }
 
 signupSchema.statics.createNew = (signup) => {
+	console.log("in 1st dao");
   return new Promise((resolve, reject) => {
-    if (!_.isObject(signup)) {
-      return reject(new TypeError('Todo is not a valid object.'));
-    }
-
-    let _something = new signup(signup);
+//    if (!_.isObject(signup)) {
+  //    return reject(new TypeError('Todo is not a valid object.'));
+  //  }
+       signupVerify.verify(signup);
+	console.log("2nd dao");
+	console.log(signup);
+    let _something = new Signup(signup);
    console.log("server dao");
    console.log(_something);
 

@@ -14,6 +14,10 @@ module.exports = class signupController {
     let _signup = req.body;
    console.log(_signup);
    console.log("server controller");
+   //dao.create(_signup)
+      //.then(signupres => console.log("DAO"+signupres))
+      //.catch(error => res.status(400).json(error));
+      
    signup
       .createNew(_signup)
       .then(signup => res.status(201).json(signup))
