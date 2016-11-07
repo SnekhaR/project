@@ -8,7 +8,12 @@ module.exports = class signupRoutes {
       .route('/api/signup')
       //.get(signupController.getAll)
       .post(signupController.create);
+    
 
+    router
+      .route('/api/verif')
+      //.get(signupController.getAll)
+      .post(signupController.verif);
       
   }
 }

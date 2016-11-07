@@ -6,7 +6,14 @@ var nodemailer        = require("nodemailer"),
     express           = require('express'),
     app               = express();
 var rand,mailOptions,host,link;
-rand=Math.floor((Math.random() * 100) + 54);
+function randomString(length, chars) {
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+}
+var rString = randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+//rand=Math.floor((Math.random() * 100) + 54);
+rand=rString;
 link="http://localhost:3000/verify?id="+rand;
 
 
@@ -56,9 +63,23 @@ module.exports = class signupController {
       //.then(signup => res.status(201).json(signup))
       //.catch(error => res.status(400).json(error));
   static verif(req,res){
+    let _verif = req.body;
     console.log('frm /verify get');
-    res.end("<h1>email is verified</h1>");
-  }
+    console.log(_verif.a);
+    console.log(rand);
+    if(_verif.a==rand)
+    {
+        console.log("email is verified");
+        res.end("<h1>Email is Successfully verified</h1>");
+    }
+    else
+    {
+        console.log("email is not verified");
+        res.end("<h1>Bad Request</h1>");
+    }
+}
+    //res.end("<h1>email is verified</h1>");
+  
 
   static removeById(req, res) {
     let _id = req.params.id;
